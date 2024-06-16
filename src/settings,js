@@ -1,0 +1,4 @@
+export default {
+  title: 'svtcc-music-admin',
+  baseUrl: "/api/"
+}
