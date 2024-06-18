@@ -1,4 +1,5 @@
 import requests from "@/utils/request";
+import store from "@/store";
 
 export const getUserInfo = (data) => {
     const requestData = {
@@ -9,6 +10,7 @@ export const getUserInfo = (data) => {
     return requests.post('/login', requestData)
         .then(response => {
             console.log("登录响应数据:", response.data);
+            store.commit('setUserInfo', response.data);
             return response.data; // 返回响应数据
         })
         .catch(error => {

@@ -240,11 +240,15 @@ export default {
 
       getUserInfo(this.form)
           .then(response => {
+            console.log(this.$store.state.userInfo);
             this.isLoggingIn = false; // 无论登录成功或失败，都重置登录状态为 false
-            if (response) {
+            if (store.state.userInfo.code === 0) {
+              this.isAnimating = true
               // 登录成功，处理登录逻辑
               store.commit('setLoginStatus', true); // 设置登录状态为 true，假设使用 Vuex 管理登录状态
-              this.$router.push('/index'); // 跳转到首页或其他页面
+              setTimeout(() => {
+                router.push('/index');
+              }, 1000); // 动画持续时间与CSS动画时长保持一致
             } else {
               // 登录失败，显示错误信息
               alert("用户名或密码错误！");

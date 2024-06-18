@@ -1,5 +1,4 @@
-import {getUserByID} from "@/api/user";
-import {getUserInfo} from "@/api/SvtccUser";
+
 
 export default {
     namespaced: true, // 开启命名空间，这样可以避免不同模块的命名冲突

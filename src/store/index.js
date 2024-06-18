@@ -19,10 +19,16 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     name: 'store',
     state:{
-        const:100
+        userInfo: null
     },
     modules:{
         moudls,
+    },
+
+    mutations: {
+        setUserInfo(state, userInfo) {
+            state.userInfo = userInfo; // 将获取的用户信息存储到状态中
+        }
     }
 })
 
