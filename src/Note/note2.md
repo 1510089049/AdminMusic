@@ -56,5 +56,10 @@ main.js =》 app.vue =》 router.js =》 页面
 ### Element-UI
 安装sass用于辅助css编译
 
+### vuex
+
+vuex是一个vue的状态管理工具，工具就是组件，状态就是数据
+合起来就是管理组件的数据，将共性数据封装起来
+
 
 

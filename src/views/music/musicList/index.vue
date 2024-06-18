@@ -5,14 +5,15 @@
     <Handle/>
     <LyricSet/>
     <Player/>
+
   </div>
   </template>
   
   <script>
-
+  import { mapActions, mapGetters } from 'vuex';
 
   export default {
-
+    name: 'MusicList',
   };
   </script>
   

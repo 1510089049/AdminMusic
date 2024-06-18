@@ -16,7 +16,7 @@
             <h3 class="title" :class="{ fadeOut: isAnimating }">系统登录</h3>
             <el-form-item label="账号" prop="account">
               <el-input
-                  v-model="form.account"
+                  v-model="form.username"
                   placeholder="请输入用户名"
                   @focus="handleFocus"
                   @blur="handleBlur"
@@ -34,7 +34,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" class="w100p register-btn" @click="register" :class="{ fadeOut: isAnimating }">登录</el-button>
+              <el-button type="primary" class="w100p register-btn" @click="login" :class="{ fadeOut: isAnimating }">登录</el-button>
             </el-form-item>
             <div class="txt-r" :class="{ fadeOut: isAnimating }">
               <router-link to="/register" class="link">没有账号？去注册</router-link>
@@ -215,27 +215,46 @@
 
 <script>
 import router from "@/router";
+import {getUserInfo} from "@/api/SvtccUser";
+import store from "@/store";
 
 export default {
   data() {
     return {
       form: {
-        account: 'root',
-        password: 'root'
+        username: '',
+        password: ''
       },
       rules: {
-        account: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
-      isAnimating: false
+      isAnimating: false,
+      isLoggingIn: false // 添加登录状态标志
     };
   },
   methods: {
-    register() {
-      this.isAnimating = true;
-      setTimeout(() => {
-        router.push('/index');
-      }, 1000); // 动画持续时间与CSS动画时长保持一致
+    login() {
+      if (this.isLoggingIn) return; // 如果正在登录中，则不执行登录操作
+      this.isLoggingIn = true; // 设置登录状态为 true
+
+      getUserInfo(this.form)
+          .then(response => {
+            this.isLoggingIn = false; // 无论登录成功或失败，都重置登录状态为 false
+            if (response) {
+              // 登录成功，处理登录逻辑
+              store.commit('setLoginStatus', true); // 设置登录状态为 true，假设使用 Vuex 管理登录状态
+              this.$router.push('/index'); // 跳转到首页或其他页面
+            } else {
+              // 登录失败，显示错误信息
+              alert("用户名或密码错误！");
+            }
+          })
+          .catch(error => {
+            this.isLoggingIn = false; // 登录出错时也要重置登录状态
+            console.error("登录出错:", error);
+            alert("登录出错，请稍后重试！");
+          });
     },
     handleFocus(event) {
       event.target.classList.add('input-focus');

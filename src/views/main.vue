@@ -22,7 +22,9 @@
       <div>
         <el-main class="animated-main">
           <!-- 根据路由动态渲染组件 -->
-          <div><router-view></router-view></div>
+          <div>
+            <el-tooltip><Test/></el-tooltip>
+            <router-view></router-view></div>
         </el-main>
       </div>
     </el-container>
@@ -56,6 +58,7 @@
 import SidebarMenu from "@/components/tourMenu/sidebar.vue";
 
 import user from "@/views/user/index.vue";
+import Test from "@/views/Test.vue";
 
 export default {
   computed: {
@@ -64,6 +67,7 @@ export default {
     }
   },
   components: {
+    Test,
     SidebarMenu
   }
 };
