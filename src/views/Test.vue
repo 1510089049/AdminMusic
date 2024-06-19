@@ -3,6 +3,7 @@
     <h1 >axios运行成功
     </h1>
     <el-button @click="getUser">获取用户</el-button>
+    <el-button @click="getPing">返回用户</el-button>
     <h3>{{message}}</h3>
   </div>
 </template>
@@ -11,6 +12,7 @@
 import {getUserByID} from "@/api/user";
 import {login} from "@/api/login";
 import store from "@/store";
+import {Ping} from "@/api/SvtccUser";
 // import axios from "axios";
 export default {
   name: "Test",
@@ -36,7 +38,11 @@ export default {
       })
       // const res = axios.get("http://localhost:8088/SSM/user/1")
       // alert(res)
+    },
+    getPing(){
+      Ping()
     }
   }
+
 };
 </script>

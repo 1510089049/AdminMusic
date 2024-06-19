@@ -215,15 +215,16 @@
 
 <script>
 import router from "@/router";
-import {getUserInfo} from "@/api/SvtccUser";
+import {getUserInfo,Ping} from "@/api/SvtccUser";
+
 import store from "@/store";
 
 export default {
   data() {
     return {
       form: {
-        username: '',
-        password: ''
+        username: 'root',
+        password: 'root'
       },
       rules: {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -240,7 +241,6 @@ export default {
 
       getUserInfo(this.form)
           .then(response => {
-            console.log(this.$store.state.userInfo);
             this.isLoggingIn = false; // 无论登录成功或失败，都重置登录状态为 false
             if (store.state.userInfo.code === 0) {
               this.isAnimating = true
@@ -252,6 +252,9 @@ export default {
             } else {
               // 登录失败，显示错误信息
               alert("用户名或密码错误！");
+            }
+            if (store.state.userInfo){
+              Ping();
             }
           })
           .catch(error => {
