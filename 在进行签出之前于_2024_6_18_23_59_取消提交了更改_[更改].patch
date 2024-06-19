@@ -1,0 +1,21 @@
+Subject: [PATCH] 在进行签出之前于 2024/6/18 23:59 取消提交了更改 [更改]
+---
+Index: src/views/login/components/login.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/views/login/components/login.vue b/src/views/login/components/login.vue
+--- a/src/views/login/components/login.vue	
++++ b/src/views/login/components/login.vue	
+@@ -244,7 +244,9 @@
+             if (response) {
+               // 登录成功，处理登录逻辑
+               store.commit('setLoginStatus', true); // 设置登录状态为 true，假设使用 Vuex 管理登录状态
+-              this.$router.push('/index'); // 跳转到首页或其他页面
++              setTimeout(() => {
++                router.push('/index');
++              }, 1000);
+             } else {
+               // 登录失败，显示错误信息
+               alert("用户名或密码错误！");

@@ -23,7 +23,6 @@
         <el-main class="animated-main">
           <!-- 根据路由动态渲染组件 -->
           <div>
-            <el-tooltip><Test/></el-tooltip>
             <router-view></router-view>
           </div>
         </el-main>
@@ -42,13 +41,12 @@
 
 <script>
 import SidebarMenu from "@/components/tourMenu/sidebar.vue";
-import Test from "@/views/Test.vue";
 import { mapState } from "vuex";
 
 export default {
   components: {
     SidebarMenu,
-    Test,
+
   },
   computed: {
     ...mapState(["userInfo"]),
