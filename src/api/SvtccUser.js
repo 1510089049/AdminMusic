@@ -33,12 +33,11 @@ export const register = (data) => {
     // 发送登录请求并返回 Promise 对象
     return requests.post('/admin/user', requestData)
         .then(response => {
-            console.log("登录响应数据:", response.data);
-            store.commit('setUserInfo', response.data);
+            console.log("注册响应数据:", response.data);
             return response.data; // 返回响应数据
         })
         .catch(error => {
-            console.error("登录请求出错:", error);
+            console.error("注册请求出错:", error);
             throw error; // 抛出错误，交由上层处理
         });
 };
@@ -79,3 +78,50 @@ export const Ping = () => {
             throw error; // 抛出错误，交由上层处理
         });
 };
+
+export const GetUserList = (page,username) => {
+    // 发送登录请求并返回 Promise 对象
+    return requests.post('/admin/user/list',{
+            "page": page,
+            "size": 8,
+            "orders": [
+                {
+                    "column": "username",
+                    "asc": true
+                }
+            ],
+            "username": username,
+            "nickname": "",
+            "offset": 0
+        }
+    )
+        .then(response => {
+            // store.commit('setUserStatus', response.data);
+            // console.log(store.state.userStatus);
+            return response.data; // 返回响应数据
+        })
+        .catch(error => {
+            console.error("登录请求出错:", error);
+            throw error; // 抛出错误，交由上层处理
+        });
+};
+
+export const DeleteUser = (id) => {
+    return requests.delete(`/admin/user/${id}`)
+        .then(response => {
+            return response.data; // 返回响应数据
+        })
+        .catch(error => {
+            console.error("删除请求出错:", error);
+            throw error; // 抛出错误，交由上层处理
+        });
+}
+
+export const Modify = (id,data) => {
+    return requests.patch(`/admin/user/${id}`,data).then(response => {
+        return response.data; // 返回响应数据
+    }).catch(error => {
+        console.error("修改请求出错:", error)
+        throw error; // 抛出错误，交由上层处理
+    })
+}

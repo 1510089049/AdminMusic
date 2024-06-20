@@ -12,7 +12,7 @@
 import {getUserByID} from "@/api/user";
 import {login} from "@/api/login";
 import store from "@/store";
-import {Ping} from "@/api/SvtccUser";
+import {GetUserList, Ping} from "@/api/SvtccUser";
 // import axios from "axios";
 export default {
   name: "Test",
@@ -41,6 +41,7 @@ export default {
     },
     getPing(){
       Ping()
+      GetUserList()
     }
   }
 
