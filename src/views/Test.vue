@@ -12,7 +12,7 @@
 import {getUserByID} from "@/api/user";
 import {login} from "@/api/login";
 import store from "@/store";
-import {GetUserList, Ping} from "@/api/SvtccUser";
+import {GetLrc, GetMusic, GetMusicList} from "@/api/SvtccMusic";
 // import axios from "axios";
 export default {
   name: "Test",
@@ -40,8 +40,8 @@ export default {
       // alert(res)
     },
     getPing(){
-      Ping()
-      GetUserList()
+      console.log("this is LrcCodeReturn")
+      console.log(GetLrc(23));
     }
   }
 

@@ -12,19 +12,13 @@ export default {
           routeName = 'start';
           break;
         case '2-1':
-          routeName = 'music';
+          routeName = 'musicList';
           break;
         case '2-2':
           routeName = 'artist';
           break;
         case '2-3':
           routeName = 'album';
-          break;
-        case '2-4':
-          routeName = 'musicList'
-          break;
-        case '2-4-1':
-          routeName = 'musicList'
           break;
         case '3-1':
           routeName = 'advertising';
@@ -81,8 +75,6 @@ export default {
           <el-menu-item index="3-1">advertising</el-menu-item>
           <el-menu-item index="3-2">launchAdvertising</el-menu-item>
           <el-menu-item index="3-3">banner</el-menu-item>
-          <el-submenu index="3-4">
-          </el-submenu>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>

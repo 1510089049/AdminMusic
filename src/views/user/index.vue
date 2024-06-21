@@ -15,7 +15,7 @@
         <el-table-column prop="nickname" label="昵称" width="120"></el-table-column>
         <el-table-column prop="avatar" label="头像">
           <template slot-scope="scope">
-            <img :src="scope.row.avatar" alt="avatar" class="avatar">
+            <img :src="`${baseUrl}resource${scope.row.avatar}?Authorization=${getToken()}`"  alt="avatar" class="avatar">
           </template>
         </el-table-column>
         <el-table-column prop="enabled" label="启用状态" width="100">
@@ -71,6 +71,7 @@
 import { GetUserList, DeleteUser, Modify } from "@/api/SvtccUser";
 import Pagination from "@/components/tourMenu/Pagination.vue";
 import AddUserDialog from "@/components/AddUserDialog.vue";
+import store from "@/store";
 
 export default {
   name: 'userView',
@@ -91,7 +92,8 @@ export default {
         avatar: ''
       },
       editId: null,
-      searchQuery: ''
+      searchQuery: '',
+      baseUrl: "https://svtcc.dyw770.top:4431/"
     };
   },
   mounted() {
@@ -142,7 +144,10 @@ export default {
     handleAddUser() {
       this.$refs.addUserDialog.dialogVisible = true;
     },
-
+    getToken(){
+      const res = store.state.userInfo.data
+      return res
+    }
   }
 }
 </script>
