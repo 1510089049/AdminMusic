@@ -19,7 +19,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     name: 'store',
     state:{
-        userInfo: null
+        userInfo: {},
+        isLogin: false,
+        userStatus:{}
     },
     modules:{
         moudls,
@@ -27,7 +29,17 @@ const store = new Vuex.Store({
 
     mutations: {
         setUserInfo(state, userInfo) {
+            console.log('setUserInfo', userInfo)
             state.userInfo = userInfo; // 将获取的用户信息存储到状态中
+        },
+        setLoginStatus(state){
+            state.isLogin = true
+        },
+        setUserStatus(state,userStatus){
+            state.userStatus = userStatus
+        },
+        logout(state){
+          state.userInfo = {}
         }
     }
 })

@@ -4,14 +4,19 @@
       <div class="sign-box">
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
           <h3 class="title">系统注册</h3>
-          <el-form-item label="账号" prop="account">
-            <el-input v-model="form.account" placeholder="请输入用户名" @focus="handleFocus" @blur="handleBlur"></el-input>
+          <el-form-item label="账号" prop="username">
+            <el-input v-model="form.username" placeholder="请输入用户名" @focus="handleFocus" @blur="handleBlur"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input v-model="form.password" type="password" placeholder="请输入密码" @focus="handleFocus" @blur="handleBlur"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="cfpassword">
             <el-input v-model="form.cfpassword" type="password" placeholder="请确认密码" @focus="handleFocus" @blur="handleBlur"></el-input>
+          </el-form-item>
+          <el-form-item label="昵称" prop="nickname">
+            <el-input v-model="form.nickname" placeholder="请输入昵称" @focus="handleFocus" @blur="handleBlur"></el-input>
+          </el-form-item>
+          <el-form-item label="头像" prop="avatar">
           </el-form-item>
           <el-form-item>
             <el-button type="primary" class="w100p register-btn" @click="register">注册</el-button>
@@ -106,6 +111,31 @@
   width: 100%;
 }
 
+.avatar-uploader {
+  width: 178px;
+  height: 178px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -128,24 +158,42 @@
 </style>
 
 <script>
+
+import {register} from "@/api/SvtccUser";
+
 export default {
   data() {
     return {
       form: {
-        account: '',
+        username: '',
         password: '',
-        cfpassword: ''
+        cfpassword: '',
+        nickname: '',
+        avatar: 'https://www.bing.com/ck/a?!&&p=625bffef3ec7938bJmltdHM9MTcxODY2ODgwMCZpZ3VpZD0zN2RjZjAxMy05MmE2LTY1MTEtMWI5OC1lNDk3OTNlMzY0MDImaW5zaWQ9NTU4NA&ptn=3&ver=2&hsh=3&fclid=37dcf013-92a6-6511-1b98-e49793e36402&u=a1L2ltYWdlcy9zZWFyY2g_cT0lRTUlQTQlQjQlRTUlODMlOEYmRk9STT1JUUZSQkEmaWQ9QkI1RTMxQjFFNDI4NkFBOTIwM0RFOUFCNjA3MjFEMDY3NzQ0MURENA&ntb=1'
       },
       rules: {
-        account: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        cfpassword: [{ required: true, message: '请确认密码', trigger: 'blur' }]
+        cfpassword: [{ required: true, message: '请确认密码', trigger: 'blur' }],
+        nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
       }
     };
   },
   methods: {
     register() {
-      // 注册逻辑
+      if (this.form.password !== this.form.cfpassword) {
+        this.$message.error('密码和确认密码不一致');
+        return;
+      }
+      const { username, password, nickname, avatar } = this.form;
+      register({ username, password, nickname, avatar })
+          .then(() => {
+            this.$message.success('注册成功');
+            this.$router.push('/login');
+          })
+          .catch(error => {
+            this.$message.error('注册失败: ' + error.message);
+          });
     },
     handleFocus(event) {
       event.target.classList.add('input-focus');
