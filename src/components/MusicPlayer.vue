@@ -52,9 +52,11 @@ export default {
           let match = line.substring(1, 8);
           if (match) {
             const minutes = parseInt(match.substring(0, 2));
+            console.log("minutes:");
+            console.log(minutes)
             const seconds = parseInt(match.substring(3, 5));
             const milliseconds = parseInt(match.substring(6));
-            const text = line.substring(9); // 修改获取文本的方式
+            const text = line.substring(10) // 修改获取文本的方式
             const time = minutes * 60 + seconds + milliseconds / 100;
 
             // 添加过滤器，过滤掉不需要的内容
@@ -64,7 +66,7 @@ export default {
           }
         }
         return { time: 0, text: '' }; // 返回空文本
-      }).filter(item => item.text.trim().length > 0); // 使用过滤器过滤掉空文本项
+      }).filter(item => !isNaN(item.time) && item.text.trim().length > 0); // 使用过滤器过滤掉空文本项
     }
   },
   methods: {
@@ -77,8 +79,11 @@ export default {
     updateLyrics() {
       const currentTime = Math.floor(this.$refs.audio.currentTime); // 获取当前播放时间的秒数
 
+      // 获取歌曲总时长
+
+
       // 初始化栈
-      if (this.currentLineStack.length === 0) {
+      if (currentTime === 0) {
         this.currentLineStack = [...this.formattedLyrics].reverse();
       }
 
@@ -189,10 +194,10 @@ export default {
 }
 
 .lyrics-line {
-  text-align: left;
+  text-align: center;
   white-space: pre-wrap;
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 36px;
+  line-height: 2;
   color: #fff; /* 修改文字颜色为白色 */
   padding: 5px 0;
   transition: color 0.3s ease;
